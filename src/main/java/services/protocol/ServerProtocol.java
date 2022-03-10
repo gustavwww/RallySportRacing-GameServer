@@ -1,5 +1,7 @@
 package services.protocol;
 
+import model.Game;
+
 public class ServerProtocol {
 
     private static ServerProtocol instance = null;
@@ -25,5 +27,10 @@ public class ServerProtocol {
         return parser.parseCommand(cmd);
     }
 
+    public String parseGame(Game game) {
+        //TODO
+        // game:player,name,x,y,z,player,name,x,y,z....
+        return "";
+    }
 
 }
