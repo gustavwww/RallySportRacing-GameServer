@@ -1,5 +1,7 @@
 package controller;
 
+import services.protocol.ServerProtocol;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,12 +25,13 @@ public class ClientController implements Runnable {
             this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.writer = new PrintWriter(socket.getOutputStream(), true);
 
+            ServerProtocol protocol = ServerProtocol.getInstance();
+            CommandHandler commandHandler = new CommandHandler(this);
 
             String input;
             while((input = reader.readLine()) != null) {
 
-
-
+                commandHandler.handleCommand(protocol.parseMessage(input));
 
             }
 
