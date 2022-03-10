@@ -18,6 +18,11 @@ public class ClientController implements Runnable {
         this.socket = socket;
     }
 
+    public void sendTCP(String msg) {
+        if (writer == null) return;
+        writer.println(msg);
+    }
+
     @Override
     public void run() {
 
@@ -32,7 +37,6 @@ public class ClientController implements Runnable {
             while((input = reader.readLine()) != null) {
 
                 commandHandler.handleCommand(protocol.parseMessage(input));
-
             }
 
             disconnect();
@@ -41,7 +45,6 @@ public class ClientController implements Runnable {
             e.printStackTrace();
             disconnect();
         }
-
 
     }
 
