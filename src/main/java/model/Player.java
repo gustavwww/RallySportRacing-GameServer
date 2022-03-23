@@ -13,6 +13,8 @@ public class Player {
     public Player(String name, ClientController client) {
         this.name = name;
         this.client = client;
+
+        position = new Vector3<>(0.0f, 0.0f, 0.0f);
     }
 
     public String getName() {

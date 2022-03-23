@@ -1,5 +1,7 @@
 package controller;
 
+import model.Game;
+import model.Player;
 import services.protocol.ServerProtocol;
 
 import java.io.BufferedReader;
@@ -13,9 +15,33 @@ public class ClientController implements Runnable {
     private final Socket socket;
     private BufferedReader reader;
     private PrintWriter writer;
+    ServerProtocol protocol;
+
+    private Game game = null;
+    private Player player = null;
 
     public ClientController(Socket socket) {
         this.socket = socket;
+        protocol = ServerProtocol.getInstance();
+    }
+
+    public void joinGame(Game game, String name) {
+        if (this.game != null) {
+            sendTCP(protocol.writeError("Already in a game!"));
+            return;
+        }
+
+        this.game = game;
+        player = new Player(name, this);
+        game.addPlayer(player);
+    }
+
+    public void leaveGame() {
+        if (game == null || player == null) {
+            return;
+        }
+
+        game.removePlayer(player);
     }
 
     public void sendTCP(String msg) {
@@ -30,7 +56,6 @@ public class ClientController implements Runnable {
             this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.writer = new PrintWriter(socket.getOutputStream(), true);
 
-            ServerProtocol protocol = ServerProtocol.getInstance();
             CommandHandler commandHandler = new CommandHandler(this);
 
             String input;
@@ -52,6 +77,8 @@ public class ClientController implements Runnable {
         try {
             System.out.println("Client disconnected from Server: " + socket.getInetAddress().getHostAddress());
             socket.close();
+
+            leaveGame();
 
         } catch (IOException ignored){};
     }

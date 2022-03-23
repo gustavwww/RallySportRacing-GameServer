@@ -1,6 +1,9 @@
 package services.protocol;
 
 import model.Game;
+import model.Player;
+
+import java.util.List;
 
 public class ServerProtocol {
 
@@ -28,9 +31,22 @@ public class ServerProtocol {
     }
 
     public String parseGame(Game game) {
-        //TODO
         // game:player,name,x,y,z,player,name,x,y,z....
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append("game:");
+        for (Player p : game.getPlayers()) {
+            sb.append("player,").append(p.getName()).append(",")
+                    .append(p.getPosition().x).append(",")
+                    .append(p.getPosition().y).append(",")
+                    .append(p.getPosition().z).append(",");
+        }
+        sb.setLength(sb.length()-1);
+
+        return sb.toString();
+    }
+
+    public String writeError(String msg) {
+        return "error:" + msg;
     }
 
 }

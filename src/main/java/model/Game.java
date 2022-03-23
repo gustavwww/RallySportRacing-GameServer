@@ -6,9 +6,11 @@ import java.util.List;
 
 public class Game implements Runnable {
 
-    private static final int TICK_RATE = 200;
+    private static final int TICK_RATE = 120;
 
     private final List<Player> players = Collections.synchronizedList(new ArrayList<>());
+
+    private boolean isRunning = false;
 
     public void addPlayer(Player player) {
         players.add(player);
@@ -20,11 +22,12 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
+        isRunning = true;
 
         long sleepTime = 1000 / TICK_RATE;
         long taskTime = 0;
 
-        while(true) {
+        while(isRunning) {
             taskTime = System.currentTimeMillis();
 
             // Take input
@@ -40,9 +43,15 @@ public class Game implements Runnable {
                 }
             }
         }
-
     }
 
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    /**
+     * @return Returns a copy of the players and their state.
+     */
     public List<Player> getPlayers() {
         synchronized (players) {
             return new ArrayList<>(players);
