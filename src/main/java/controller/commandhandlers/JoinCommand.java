@@ -19,7 +19,6 @@ public class JoinCommand extends AbstractCommandHandler {
 
             if (id.equalsIgnoreCase("hub")) {
                 client.joinGame(GameManager.getHubGame(), name);
-                System.out.println("Client joined the hub game!");
             }
 
         }

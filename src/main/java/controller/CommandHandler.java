@@ -23,7 +23,8 @@ public class CommandHandler {
 
     private void setupHandlers() {
 
-        firstHandler = new TestCommand().setNext(new JoinCommand()).setNext(new PosCommand());
+        firstHandler = new TestCommand();
+        firstHandler.setNext(new JoinCommand()).setNext(new PosCommand());
     }
 
     public void handleCommand(Command cmd) {

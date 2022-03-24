@@ -28,7 +28,6 @@ public class PosCommand extends AbstractCommandHandler {
             float z = Float.parseFloat(args[2]);
 
             client.getPlayer().setPosition(new Vector3<>(x,y,z));
-
         } catch (NumberFormatException ignored) {}
 
     }
