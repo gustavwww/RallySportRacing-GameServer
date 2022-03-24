@@ -49,4 +49,8 @@ public class ServerProtocol {
         return "error:" + msg;
     }
 
+    public String writeSuccess(String key) {
+        return "success:" + key;
+    }
+
 }
