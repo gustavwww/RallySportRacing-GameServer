@@ -34,6 +34,8 @@ public class ClientController implements Runnable {
         this.game = game;
         player = new Player(name, this);
         game.addPlayer(player);
+
+        sendTCP(protocol.writeSuccess("joined"));
     }
 
     public void leaveGame() {
