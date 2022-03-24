@@ -17,6 +17,10 @@ public class Player {
         position = new Vector3<>(0.0f, 0.0f, 0.0f);
     }
 
+    public void setPosition(Vector3<Float> position) {
+        this.position = position;
+    }
+
     public String getName() {
         return name;
     }

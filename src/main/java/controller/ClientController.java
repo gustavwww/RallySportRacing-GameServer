@@ -83,5 +83,7 @@ public class ClientController implements Runnable {
         } catch (IOException ignored){};
     }
 
-
+    public Player getPlayer() {
+        return player;
+    }
 }
