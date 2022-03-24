@@ -2,6 +2,7 @@ package controller;
 
 import controller.commandhandlers.ICommandHandler;
 import controller.commandhandlers.JoinCommand;
+import controller.commandhandlers.PosCommand;
 import controller.commandhandlers.TestCommand;
 import services.protocol.Command;
 import services.protocol.ServerProtocol;
@@ -22,7 +23,7 @@ public class CommandHandler {
 
     private void setupHandlers() {
 
-        firstHandler = new TestCommand().setNext(new JoinCommand());
+        firstHandler = new TestCommand().setNext(new JoinCommand()).setNext(new PosCommand());
     }
 
     public void handleCommand(Command cmd) {
