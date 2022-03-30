@@ -13,6 +13,8 @@ import java.net.Socket;
 public class ClientController implements Runnable {
 
     private final Socket socket;
+    private final int clientID;
+
     private BufferedReader reader;
     private PrintWriter writer;
     ServerProtocol protocol;
@@ -20,8 +22,9 @@ public class ClientController implements Runnable {
     private Game game = null;
     private Player player = null;
 
-    public ClientController(Socket socket) {
+    public ClientController(Socket socket, int clientID) {
         this.socket = socket;
+        this.clientID = clientID;
         protocol = ServerProtocol.getInstance();
     }
 
@@ -32,7 +35,7 @@ public class ClientController implements Runnable {
         }
 
         this.game = game;
-        player = new Player(name, this);
+        player = new Player(clientID, name, this);
         game.addPlayer(player);
 
         sendTCP(protocol.writeSuccess("joined"));

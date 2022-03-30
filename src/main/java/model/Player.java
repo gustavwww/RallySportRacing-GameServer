@@ -7,10 +7,13 @@ public class Player {
 
     private final ClientController client;
 
+    private final int id;
     private final String name;
+
     private Vector3<Float> position;
 
-    public Player(String name, ClientController client) {
+    public Player(int id, String name, ClientController client) {
+        this.id = id;
         this.name = name;
         this.client = client;
 
@@ -19,6 +22,10 @@ public class Player {
 
     public void setPosition(Vector3<Float> position) {
         this.position = position;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

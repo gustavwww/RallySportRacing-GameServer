@@ -3,8 +3,6 @@ package services.protocol;
 import model.Game;
 import model.Player;
 
-import java.util.List;
-
 public class ServerProtocol {
 
     private static ServerProtocol instance = null;
@@ -35,7 +33,8 @@ public class ServerProtocol {
         StringBuilder sb = new StringBuilder();
         sb.append("game:");
         for (Player p : game.getPlayers()) {
-            sb.append("player,").append(p.getName()).append(",")
+            sb.append("player,").append(p.getId()).append(",")
+                    .append(p.getName()).append(",")
                     .append(p.getPosition().x).append(",")
                     .append(p.getPosition().y).append(",")
                     .append(p.getPosition().z).append(",");
