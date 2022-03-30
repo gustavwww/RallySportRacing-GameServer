@@ -18,16 +18,21 @@ public class PosCommand extends AbstractCommandHandler {
         }
 
         String[] args = cmd.getArgs();
-        if (args.length < 3) {
+        if (args.length < 6) {
             return;
         }
 
         try {
-            float x = Float.parseFloat(args[0]);
-            float y = Float.parseFloat(args[1]);
-            float z = Float.parseFloat(args[2]);
+            float posX = Float.parseFloat(args[0]);
+            float posY = Float.parseFloat(args[1]);
+            float posZ = Float.parseFloat(args[2]);
 
-            client.getPlayer().setPosition(new Vector3<>(x,y,z));
+            float orX = Float.parseFloat(args[3]);
+            float orY = Float.parseFloat(args[4]);
+            float orZ = Float.parseFloat(args[5]);
+
+            client.getPlayer().setPosition(new Vector3<>(posX,posY,posZ));
+            client.getPlayer().setOrientation(new Vector3<>(orX, orY, orZ));
         } catch (NumberFormatException ignored) {}
 
     }

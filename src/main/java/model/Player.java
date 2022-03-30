@@ -11,6 +11,7 @@ public class Player {
     private final String name;
 
     private Vector3<Float> position;
+    private Vector3<Float> orientation;
 
     public Player(int id, String name, ClientController client) {
         this.id = id;
@@ -18,10 +19,15 @@ public class Player {
         this.client = client;
 
         position = new Vector3<>(0.0f, 0.0f, 0.0f);
+        orientation = new Vector3<>(0.0f, 0.0f, 0.0f);
     }
 
     public void setPosition(Vector3<Float> position) {
         this.position = position;
+    }
+
+    public void setOrientation(Vector3<Float> orientation) {
+        this.orientation = orientation;
     }
 
     public int getId() {
@@ -34,6 +40,10 @@ public class Player {
 
     public Vector3<Float> getPosition() {
         return position;
+    }
+
+    public Vector3<Float> getOrientation() {
+        return orientation;
     }
 
     public ClientController getClient() {

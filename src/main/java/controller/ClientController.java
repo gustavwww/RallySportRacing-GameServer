@@ -63,6 +63,8 @@ public class ClientController implements Runnable {
 
             CommandHandler commandHandler = new CommandHandler(this);
 
+            sendTCP("connect:" + clientID);
+
             String input;
             while((input = reader.readLine()) != null) {
 
