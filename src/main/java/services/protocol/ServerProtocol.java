@@ -38,9 +38,10 @@ public class ServerProtocol {
                     .append(p.getPosition().x).append(",")
                     .append(p.getPosition().y).append(",")
                     .append(p.getPosition().z).append(",")
-                    .append(p.getOrientation().x).append(",")
-                    .append(p.getOrientation().y).append(",")
-                    .append(p.getOrientation().z).append(",");
+                    .append(p.getQuaternion().x).append(",")
+                    .append(p.getQuaternion().y).append(",")
+                    .append(p.getQuaternion().z).append(",")
+                    .append(p.getQuaternion().w).append(",");
         }
         sb.setLength(sb.length()-1);
 

@@ -2,6 +2,7 @@ package controller.commandhandlers;
 
 import controller.ClientController;
 import data.Vector3;
+import data.Vector4;
 import services.protocol.Command;
 import services.protocol.ServerProtocol;
 
@@ -18,7 +19,7 @@ public class PosCommand extends AbstractCommandHandler {
         }
 
         String[] args = cmd.getArgs();
-        if (args.length < 6) {
+        if (args.length < 7) {
             return;
         }
 
@@ -27,12 +28,13 @@ public class PosCommand extends AbstractCommandHandler {
             float posY = Float.parseFloat(args[1]);
             float posZ = Float.parseFloat(args[2]);
 
-            float orX = Float.parseFloat(args[3]);
-            float orY = Float.parseFloat(args[4]);
-            float orZ = Float.parseFloat(args[5]);
+            float quX = Float.parseFloat(args[3]);
+            float quY = Float.parseFloat(args[4]);
+            float quZ = Float.parseFloat(args[5]);
+            float quW = Float.parseFloat(args[6]);
 
             client.getPlayer().setPosition(new Vector3<>(posX,posY,posZ));
-            client.getPlayer().setOrientation(new Vector3<>(orX, orY, orZ));
+            client.getPlayer().setQuaternion(new Vector4<>(quX, quY, quZ, quW));
         } catch (NumberFormatException ignored) {}
 
     }

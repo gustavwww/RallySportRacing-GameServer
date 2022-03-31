@@ -2,6 +2,7 @@ package model;
 
 import controller.ClientController;
 import data.Vector3;
+import data.Vector4;
 
 public class Player {
 
@@ -11,7 +12,7 @@ public class Player {
     private final String name;
 
     private Vector3<Float> position;
-    private Vector3<Float> orientation;
+    private Vector4<Float> quaternion;
 
     public Player(int id, String name, ClientController client) {
         this.id = id;
@@ -19,15 +20,15 @@ public class Player {
         this.client = client;
 
         position = new Vector3<>(0.0f, 0.0f, 0.0f);
-        orientation = new Vector3<>(0.0f, 0.0f, 0.0f);
+        quaternion = new Vector4<>(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
     public void setPosition(Vector3<Float> position) {
         this.position = position;
     }
 
-    public void setOrientation(Vector3<Float> orientation) {
-        this.orientation = orientation;
+    public void setQuaternion(Vector4<Float> quaternion) {
+        this.quaternion = quaternion;
     }
 
     public int getId() {
@@ -42,8 +43,8 @@ public class Player {
         return position;
     }
 
-    public Vector3<Float> getOrientation() {
-        return orientation;
+    public Vector4<Float> getQuaternion() {
+        return quaternion;
     }
 
     public ClientController getClient() {
