@@ -74,7 +74,6 @@ public class ClientController implements Runnable {
             disconnect();
 
         } catch (IOException e) {
-            e.printStackTrace();
             disconnect();
         }
 
