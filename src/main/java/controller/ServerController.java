@@ -2,25 +2,44 @@ package controller;
 
 import services.TCPListener;
 import services.TCPServer;
+import services.UDPServer;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 
 public class ServerController implements TCPListener {
 
-    private TCPServer tcpServer;
+    private static final int PORT = 2005;
+
+    private static ServerController instance = null;
+
+    private UDPServer udpServer;
 
     private int currentClientID = 2000;
 
-    public ServerController(int port) {
+    private ServerController() {
         try {
-            tcpServer = new TCPServer(port);
+            udpServer = new UDPServer(PORT);
+            new Thread(udpServer).start();
+
+            TCPServer tcpServer = new TCPServer(PORT);
             tcpServer.addListener(this);
 
             tcpServer.listen();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void disconnectClient(int clientID) {
+        udpServer.removeListener(clientID);
+    }
+
+    public void sendUDPPacket(InetAddress address, int port, String message) {
+        try {
+            udpServer.sendPacket(address, port, message);
+        } catch (IOException ignored) {}
     }
 
     @Override
@@ -30,6 +49,17 @@ public class ServerController implements TCPListener {
         ClientController client = new ClientController(socket, currentClientID);
         new Thread(client).start();
 
+        udpServer.addListener(currentClientID, client);
+
         currentClientID++;
     }
+
+    public static ServerController getInstance() {
+        if (instance == null) {
+            instance = new ServerController();
+        }
+
+        return instance;
+    }
+
 }

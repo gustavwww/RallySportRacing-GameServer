@@ -1,23 +1,29 @@
 package controller;
 
+import data.Address;
 import model.Game;
 import model.Player;
+import services.PacketListener;
 import services.protocol.ServerProtocol;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 
-public class ClientController implements Runnable {
+public class ClientController implements Runnable, PacketListener {
 
     private final Socket socket;
     private final int clientID;
 
+    private Address address = null;
+
     private BufferedReader reader;
     private PrintWriter writer;
-    ServerProtocol protocol;
+    private final ServerProtocol protocol;
+    private CommandHandler commandHandler;
 
     private Game game = null;
     private Player player = null;
@@ -61,7 +67,7 @@ public class ClientController implements Runnable {
             this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.writer = new PrintWriter(socket.getOutputStream(), true);
 
-            CommandHandler commandHandler = new CommandHandler(this);
+            commandHandler = new CommandHandler(this);
 
             sendTCP("connect:" + clientID);
 
@@ -79,6 +85,15 @@ public class ClientController implements Runnable {
 
     }
 
+    @Override
+    public void gotPacket(InetAddress address, int port, String message) {
+        if (address == null) {
+            this.address = new Address(address, port);
+        }
+
+        commandHandler.handleCommand(protocol.parseMessage(message));
+    }
+
     private void disconnect() {
         try {
             System.out.println("Client disconnected from Server: " + socket.getInetAddress().getHostAddress());
@@ -86,10 +101,17 @@ public class ClientController implements Runnable {
 
             leaveGame();
 
+            ServerController.getInstance().disconnectClient(clientID);
+
         } catch (IOException ignored){};
     }
 
     public Player getPlayer() {
         return player;
     }
+
+    public Address getAddress() {
+        return address;
+    }
+
 }

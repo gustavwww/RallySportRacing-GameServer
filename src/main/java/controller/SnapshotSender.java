@@ -1,5 +1,6 @@
 package controller;
 
+import data.Address;
 import model.Game;
 import model.GameListener;
 import model.Player;
@@ -11,10 +12,12 @@ public class SnapshotSender implements Runnable, GameListener {
 
     private final Game game;
     private final ServerProtocol protocol;
+    private final ServerController serverController;
 
     public SnapshotSender(Game game) {
         this.game = game;
         protocol = ServerProtocol.getInstance();
+        serverController = ServerController.getInstance();
     }
 
     @Override
@@ -46,8 +49,10 @@ public class SnapshotSender implements Runnable, GameListener {
 
     private void sendGameData() {
         for (Player p : game.getPlayers()) {
-            // TODO: REPLACE TCP WITH UDP!
-            p.getClient().sendTCP(protocol.parseGame(game));
+            Address address = p.getClient().getAddress();
+            if (address == null) return;
+
+            serverController.sendUDPPacket(address.getAddress(), address.getPort(), protocol.parseGame(game));
         }
     }
 
