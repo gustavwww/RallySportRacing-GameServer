@@ -49,6 +49,7 @@ public class UDPServer implements Runnable {
     private void sendToListener(InetAddress address, int port, String message) {
 
         int index = message.indexOf('-');
+        if (index == -1) return;
         int clientID = Integer.parseInt(message.substring(0, index));
         String cmd = message.substring(index + 1);
 
@@ -60,7 +61,8 @@ public class UDPServer implements Runnable {
     }
 
     public void sendPacket(InetAddress address, int port, String message) throws IOException {
-        byte[] bytes = message.getBytes();
+        String msgLine = message + "\n";
+        byte[] bytes = msgLine.getBytes();
         DatagramPacket packet = new DatagramPacket(bytes, 0, bytes.length, address, port);
         socket.send(packet);
     }

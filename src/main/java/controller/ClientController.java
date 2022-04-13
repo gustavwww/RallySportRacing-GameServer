@@ -18,7 +18,7 @@ public class ClientController implements Runnable, PacketListener {
     private final Socket socket;
     private final int clientID;
 
-    private Address address = null;
+    private Address udpAddress = null;
 
     private BufferedReader reader;
     private PrintWriter writer;
@@ -73,7 +73,7 @@ public class ClientController implements Runnable, PacketListener {
 
             String input;
             while((input = reader.readLine()) != null) {
-
+                System.out.println("Got message: " + input);
                 commandHandler.handleCommand(protocol.parseMessage(input));
             }
 
@@ -87,8 +87,8 @@ public class ClientController implements Runnable, PacketListener {
 
     @Override
     public void gotPacket(InetAddress address, int port, String message) {
-        if (address == null) {
-            this.address = new Address(address, port);
+        if (udpAddress == null) {
+            udpAddress = new Address(address, port);
         }
 
         commandHandler.handleCommand(protocol.parseMessage(message));
@@ -111,7 +111,7 @@ public class ClientController implements Runnable, PacketListener {
     }
 
     public Address getAddress() {
-        return address;
+        return udpAddress;
     }
 
 }

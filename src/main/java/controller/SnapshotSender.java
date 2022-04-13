@@ -22,7 +22,6 @@ public class SnapshotSender implements Runnable, GameListener {
 
     @Override
     public void run() {
-        new Thread(game).start();
 
         long sleepTime = 1000 / PACKET_RATE;
         long taskTime = 0;
@@ -51,7 +50,6 @@ public class SnapshotSender implements Runnable, GameListener {
         for (Player p : game.getPlayers()) {
             Address address = p.getClient().getAddress();
             if (address == null) return;
-
             serverController.sendUDPPacket(address.getAddress(), address.getPort(), protocol.parseGame(game));
         }
     }

@@ -27,7 +27,7 @@ public class CommandHandler {
         firstHandler.setNext(new JoinCommand()).setNext(new PosCommand());
     }
 
-    public void handleCommand(Command cmd) {
+    public synchronized void handleCommand(Command cmd) {
         firstHandler.handle(cmd, client, protocol);
     }
 

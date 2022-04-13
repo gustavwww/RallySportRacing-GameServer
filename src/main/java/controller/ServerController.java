@@ -18,7 +18,9 @@ public class ServerController implements TCPListener {
 
     private int currentClientID = 2000;
 
-    private ServerController() {
+    private ServerController() {}
+
+    public void begin() {
         try {
             udpServer = new UDPServer(PORT);
             new Thread(udpServer).start();
@@ -32,11 +34,11 @@ public class ServerController implements TCPListener {
         }
     }
 
-    public void disconnectClient(int clientID) {
+    public synchronized void disconnectClient(int clientID) {
         udpServer.removeListener(clientID);
     }
 
-    public void sendUDPPacket(InetAddress address, int port, String message) {
+    public synchronized void sendUDPPacket(InetAddress address, int port, String message) {
         try {
             udpServer.sendPacket(address, port, message);
         } catch (IOException ignored) {}
@@ -54,7 +56,7 @@ public class ServerController implements TCPListener {
         currentClientID++;
     }
 
-    public static ServerController getInstance() {
+    public static synchronized ServerController getInstance() {
         if (instance == null) {
             instance = new ServerController();
         }

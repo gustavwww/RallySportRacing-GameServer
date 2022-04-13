@@ -6,7 +6,7 @@ public class GameManager {
 
     public static Game hub = null;
 
-    public static Game getHubGame() {
+    public static synchronized Game getHubGame() {
         if (hub == null) {
             hub = new Game();
             new Thread(hub).start();
