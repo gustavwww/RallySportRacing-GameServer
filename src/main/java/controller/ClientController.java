@@ -73,16 +73,12 @@ public class ClientController implements Runnable, PacketListener {
 
             String input;
             while((input = reader.readLine()) != null) {
-                System.out.println("Got message: " + input);
                 commandHandler.handleCommand(protocol.parseMessage(input));
             }
 
-            disconnect();
+        } catch (IOException ignored) {}
 
-        } catch (IOException e) {
-            disconnect();
-        }
-
+        disconnect();
     }
 
     @Override
