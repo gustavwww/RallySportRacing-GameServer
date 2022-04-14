@@ -92,14 +92,12 @@ public class ClientController implements Runnable, PacketListener {
 
     private void disconnect() {
         try {
-            System.out.println("Client disconnected from Server: " + socket.getInetAddress().getHostAddress());
             socket.close();
-
-            leaveGame();
-
-            ServerController.getInstance().disconnectClient(clientID);
-
         } catch (IOException ignored){};
+
+        leaveGame();
+        ServerController.getInstance().disconnectClient(clientID);
+        System.out.println("Client disconnected from Server: " + socket.getInetAddress().getHostAddress());
     }
 
     public Player getPlayer() {
