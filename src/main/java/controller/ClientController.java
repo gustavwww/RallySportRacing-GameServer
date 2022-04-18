@@ -53,6 +53,8 @@ public class ClientController implements Runnable, PacketListener {
         }
 
         game.removePlayer(player);
+        game = null;
+        player = null;
     }
 
     public void sendTCP(String msg) {

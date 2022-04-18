@@ -6,17 +6,17 @@ import java.util.List;
 
 public class Game implements Runnable {
 
-    private static final int TICK_RATE = 120;
+    private static final int TICK_RATE = 20;
 
     private final List<Player> players = Collections.synchronizedList(new ArrayList<>());
 
     private boolean isRunning = false;
 
-    public void addPlayer(Player player) {
+    public synchronized void addPlayer(Player player) {
         players.add(player);
     }
 
-    public void removePlayer(Player player) {
+    public synchronized void removePlayer(Player player) {
         players.remove(player);
     }
 
