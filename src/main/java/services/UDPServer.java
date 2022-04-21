@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class UDPServer implements Runnable {
         try {
 
             while (true) {
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[8192];
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
                 socket.receive(request);
 

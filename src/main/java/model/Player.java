@@ -28,6 +28,11 @@ public class Player {
         position = new Vector3<>(0.0f, 0.0f, 0.0f);
         quaternion = new Vector4<>(0.0f, 0.0f, 0.0f, 0.0f);
         objects = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            objects.add(new Tuple<>(new Vector3<>(0f,0f,0f), new Vector4<>(0f,0f,0f,0f)));
+        }
+
     }
 
     public void setPosition(Vector3<Float> position) {
