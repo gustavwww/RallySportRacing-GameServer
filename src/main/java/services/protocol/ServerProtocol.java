@@ -1,5 +1,8 @@
 package services.protocol;
 
+import data.Tuple;
+import data.Vector3;
+import data.Vector4;
 import model.Game;
 import model.Player;
 
@@ -42,6 +45,19 @@ public class ServerProtocol {
                     .append(p.getQuaternion().y).append(",")
                     .append(p.getQuaternion().z).append(",")
                     .append(p.getQuaternion().w).append(",");
+
+            for (Tuple<Vector3<Float>, Vector4<Float>> o : p.getObjects()) {
+
+                sb.append(o.getFirst().x).append(",")
+                        .append(o.getFirst().y).append(",")
+                        .append(o.getFirst().z).append(",")
+                        .append(o.getSecond().x).append(",")
+                        .append(o.getSecond().y).append(",")
+                        .append(o.getSecond().z).append(",")
+                        .append(o.getSecond().w).append(",");
+
+            }
+
         }
         sb.setLength(sb.length()-1);
 

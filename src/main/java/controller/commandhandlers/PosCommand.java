@@ -1,10 +1,16 @@
 package controller.commandhandlers;
 
 import controller.ClientController;
+import data.Tuple;
 import data.Vector3;
 import data.Vector4;
 import services.protocol.Command;
 import services.protocol.ServerProtocol;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PosCommand extends AbstractCommandHandler {
 
@@ -35,6 +41,28 @@ public class PosCommand extends AbstractCommandHandler {
 
             client.getPlayer().setPosition(new Vector3<>(posX,posY,posZ));
             client.getPlayer().setQuaternion(new Vector4<>(quX, quY, quZ, quW));
+
+            if (args.length > 7 && args.length % 7 == 0) {
+
+                List<Tuple<Vector3<Float>, Vector4<Float>>> objects = new ArrayList<>();
+
+                for (int i = 7; i < args.length; i += 7) {
+
+                    posX = Float.parseFloat(args[i]);
+                    posY = Float.parseFloat(args[i + 1]);
+                    posZ = Float.parseFloat(args[i + 2]);
+
+                    quX = Float.parseFloat(args[i + 3]);
+                    quY = Float.parseFloat(args[i + 4]);
+                    quZ = Float.parseFloat(args[i + 5]);
+                    quW = Float.parseFloat(args[i + 6]);
+
+                    objects.add(new Tuple<>(new Vector3<>(posX, posY, posZ), new Vector4<>(quX, quY, quZ, quW)));
+                    client.getPlayer().setObjects(objects);
+                }
+
+            }
+
         } catch (NumberFormatException ignored) {}
 
     }

@@ -13,11 +13,15 @@ public class Game implements Runnable {
     private boolean isRunning = false;
 
     public synchronized void addPlayer(Player player) {
-        players.add(player);
+        synchronized (players) {
+            players.add(player);
+        }
     }
 
     public synchronized void removePlayer(Player player) {
-        players.remove(player);
+        synchronized (players) {
+            players.remove(player);
+        }
     }
 
     @Override
