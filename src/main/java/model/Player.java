@@ -18,6 +18,8 @@ public class Player {
     private Vector3<Float> position;
     private Vector4<Float> quaternion;
 
+    private String soundString;
+
     private List<Tuple<Vector3<Float>, Vector4<Float>>> objects;
 
     public Player(int id, String name, ClientController client) {
@@ -27,6 +29,9 @@ public class Player {
 
         position = new Vector3<>(0.0f, 0.0f, 0.0f);
         quaternion = new Vector4<>(0.0f, 0.0f, 0.0f, 0.0f);
+
+        soundString = "000";
+
         objects = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
@@ -41,6 +46,10 @@ public class Player {
 
     public void setQuaternion(Vector4<Float> quaternion) {
         this.quaternion = quaternion;
+    }
+
+    public void setSoundString(String soundString) {
+        this.soundString = soundString;
     }
 
     public void setObjects(List<Tuple<Vector3<Float>, Vector4<Float>>> objects) {
@@ -61,6 +70,10 @@ public class Player {
 
     public Vector4<Float> getQuaternion() {
         return quaternion;
+    }
+
+    public String getSoundString() {
+        return soundString;
     }
 
     public List<Tuple<Vector3<Float>, Vector4<Float>>> getObjects() {

@@ -23,7 +23,7 @@ public class PosCommand extends AbstractCommandHandler {
         }
 
         String[] args = cmd.getArgs();
-        if (args.length < 7) {
+        if (args.length < 8) {
             return;
         }
 
@@ -37,14 +37,20 @@ public class PosCommand extends AbstractCommandHandler {
             float quZ = Float.parseFloat(args[5]);
             float quW = Float.parseFloat(args[6]);
 
+            String soundString = args[7];
+
             client.getPlayer().setPosition(new Vector3<>(posX,posY,posZ));
             client.getPlayer().setQuaternion(new Vector4<>(quX, quY, quZ, quW));
 
-            if (args.length > 7 && args.length % 7 == 0) {
+            if (soundString.length() == 3) {
+                client.getPlayer().setSoundString(soundString);
+            }
+
+            if (args.length > 8 && (args.length - 8) % 7 == 0) {
 
                 List<Tuple<Vector3<Float>, Vector4<Float>>> objects = new ArrayList<>();
 
-                for (int i = 7; i < args.length; i += 7) {
+                for (int i = 8; i < args.length; i += 7) {
 
                     posX = Float.parseFloat(args[i]);
                     posY = Float.parseFloat(args[i + 1]);
