@@ -8,7 +8,7 @@ import services.protocol.ServerProtocol;
 
 public class SnapshotSender implements Runnable, GameListener {
 
-    private static final int PACKET_RATE = 60;
+    private static final int PACKET_RATE = 120;
 
     private final Game game;
     private final ServerProtocol protocol;
