@@ -4,6 +4,7 @@ import controller.ClientController;
 import data.Tuple;
 import data.Vector3;
 import data.Vector4;
+import model.Player;
 import services.protocol.Command;
 import services.protocol.ServerProtocol;
 
@@ -22,6 +23,8 @@ public class PosCommand extends AbstractCommandHandler {
             return;
         }
 
+        Player p = client.getPlayer();
+
         String[] args = cmd.getArgs();
         if (args.length < 8) {
             return;
@@ -37,20 +40,23 @@ public class PosCommand extends AbstractCommandHandler {
             float quZ = Float.parseFloat(args[5]);
             float quW = Float.parseFloat(args[6]);
 
-            String soundString = args[7];
+            float speed = Float.parseFloat(args[7]);
+            p.setSpeed(speed);
 
-            client.getPlayer().setPosition(new Vector3<>(posX,posY,posZ));
-            client.getPlayer().setQuaternion(new Vector4<>(quX, quY, quZ, quW));
+            String soundString = args[8];
+
+            p.setPosition(new Vector3<>(posX,posY,posZ));
+            p.setQuaternion(new Vector4<>(quX, quY, quZ, quW));
 
             if (soundString.length() == 3) {
                 client.getPlayer().setSoundString(soundString);
             }
 
-            if (args.length > 8 && (args.length - 8) % 7 == 0) {
+            if (args.length > 9 && (args.length - 9) % 7 == 0) {
 
                 List<Tuple<Vector3<Float>, Vector4<Float>>> objects = new ArrayList<>();
 
-                for (int i = 8; i < args.length; i += 7) {
+                for (int i = 9; i < args.length; i += 7) {
 
                     posX = Float.parseFloat(args[i]);
                     posY = Float.parseFloat(args[i + 1]);
@@ -62,7 +68,7 @@ public class PosCommand extends AbstractCommandHandler {
                     quW = Float.parseFloat(args[i + 6]);
 
                     objects.add(new Tuple<>(new Vector3<>(posX, posY, posZ), new Vector4<>(quX, quY, quZ, quW)));
-                    client.getPlayer().setObjects(objects);
+                    p.setObjects(objects);
                 }
 
             }

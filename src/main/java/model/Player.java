@@ -18,6 +18,8 @@ public class Player {
     private Vector3<Float> position;
     private Vector4<Float> quaternion;
 
+    private float speed;
+
     private String soundString;
 
     private List<Tuple<Vector3<Float>, Vector4<Float>>> objects;
@@ -29,6 +31,8 @@ public class Player {
 
         position = new Vector3<>(0.0f, 0.0f, 0.0f);
         quaternion = new Vector4<>(0.0f, 0.0f, 0.0f, 0.0f);
+
+        speed = 0.0f;
 
         soundString = "000";
 
@@ -46,6 +50,10 @@ public class Player {
 
     public void setQuaternion(Vector4<Float> quaternion) {
         this.quaternion = quaternion;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 
     public void setSoundString(String soundString) {
@@ -70,6 +78,10 @@ public class Player {
 
     public Vector4<Float> getQuaternion() {
         return quaternion;
+    }
+
+    public float getSpeed() {
+        return speed;
     }
 
     public String getSoundString() {

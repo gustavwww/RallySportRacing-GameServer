@@ -32,7 +32,7 @@ public class ServerProtocol {
     }
 
     public String parseGame(Game game) {
-        // game:player,name,x,y,z,player,name,x,y,z....
+        // game:player,name,x,y,z,...player,name,x,y,z....
         StringBuilder sb = new StringBuilder();
         sb.append("game:");
         for (Player p : game.getPlayers()) {
@@ -45,6 +45,7 @@ public class ServerProtocol {
                     .append(p.getQuaternion().y).append(",")
                     .append(p.getQuaternion().z).append(",")
                     .append(p.getQuaternion().w).append(",")
+                    .append(p.getSpeed()).append(",")
                     .append(p.getSoundString()).append(",");
 
             for (Tuple<Vector3<Float>, Vector4<Float>> o : p.getObjects()) {
