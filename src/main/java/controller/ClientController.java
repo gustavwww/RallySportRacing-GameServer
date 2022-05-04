@@ -72,6 +72,24 @@ public class ClientController implements Runnable, PacketListener {
 
             commandHandler = new CommandHandler(this);
 
+            /*
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            if (!socket.getInetAddress().isReachable(1000)) {
+                                disconnect();
+                                break;
+                            }
+                            Thread.sleep(20000);
+                        } catch (Exception ignored) {}
+                    }
+                }
+            }).start();
+
+            */
+
             sendTCP("connect:" + clientID);
 
             String input;

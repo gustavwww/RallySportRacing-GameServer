@@ -19,6 +19,7 @@ public class Player {
     private Vector4<Float> quaternion;
 
     private float speed;
+    private Vector3<Float> speedVec;
 
     private String soundString;
 
@@ -33,6 +34,7 @@ public class Player {
         quaternion = new Vector4<>(0.0f, 0.0f, 0.0f, 0.0f);
 
         speed = 0.0f;
+        speedVec = new Vector3<>(0.0f, 0.0f, 0.0f);
 
         soundString = "000";
 
@@ -54,6 +56,10 @@ public class Player {
 
     public void setSpeed(float speed) {
         this.speed = speed;
+    }
+
+    public void setSpeedVec(Vector3<Float> speedVec) {
+        this.speedVec = speedVec;
     }
 
     public void setSoundString(String soundString) {
@@ -82,6 +88,10 @@ public class Player {
 
     public float getSpeed() {
         return speed;
+    }
+
+    public Vector3<Float> getSpeedVec() {
+        return speedVec;
     }
 
     public String getSoundString() {

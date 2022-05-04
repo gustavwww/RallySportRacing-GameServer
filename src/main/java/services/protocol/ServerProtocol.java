@@ -46,6 +46,9 @@ public class ServerProtocol {
                     .append(p.getQuaternion().z).append(",")
                     .append(p.getQuaternion().w).append(",")
                     .append(p.getSpeed()).append(",")
+                    .append(p.getSpeedVec().x).append(",")
+                    .append(p.getSpeedVec().y).append(",")
+                    .append(p.getSpeedVec().z).append(",")
                     .append(p.getSoundString()).append(",");
 
             for (Tuple<Vector3<Float>, Vector4<Float>> o : p.getObjects()) {

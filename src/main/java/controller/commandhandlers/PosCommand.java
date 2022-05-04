@@ -26,7 +26,7 @@ public class PosCommand extends AbstractCommandHandler {
         Player p = client.getPlayer();
 
         String[] args = cmd.getArgs();
-        if (args.length < 8) {
+        if (args.length < 12) {
             return;
         }
 
@@ -43,7 +43,13 @@ public class PosCommand extends AbstractCommandHandler {
             float speed = Float.parseFloat(args[7]);
             p.setSpeed(speed);
 
-            String soundString = args[8];
+            float speedX = Float.parseFloat(args[8]);
+            float speedY = Float.parseFloat(args[9]);
+            float speedZ = Float.parseFloat(args[10]);
+
+            client.getPlayer().setSpeedVec(new Vector3<>(speedX, speedY, speedZ));
+
+            String soundString = args[11];
 
             p.setPosition(new Vector3<>(posX,posY,posZ));
             p.setQuaternion(new Vector4<>(quX, quY, quZ, quW));
@@ -52,11 +58,11 @@ public class PosCommand extends AbstractCommandHandler {
                 client.getPlayer().setSoundString(soundString);
             }
 
-            if (args.length > 9 && (args.length - 9) % 7 == 0) {
+            if (args.length > 12 && (args.length - 12) % 7 == 0) {
 
                 List<Tuple<Vector3<Float>, Vector4<Float>>> objects = new ArrayList<>();
 
-                for (int i = 9; i < args.length; i += 7) {
+                for (int i = 12; i < args.length; i += 7) {
 
                     posX = Float.parseFloat(args[i]);
                     posY = Float.parseFloat(args[i + 1]);
