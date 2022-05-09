@@ -36,7 +36,7 @@ public class Player {
         speed = 0.0f;
         speedVec = new Vector3<>(0.0f, 0.0f, 0.0f);
 
-        soundString = "000";
+        soundString = "00000";
 
         objects = new ArrayList<>();
 

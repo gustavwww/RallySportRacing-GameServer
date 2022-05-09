@@ -58,6 +58,15 @@ public class ClientController implements Runnable, PacketListener {
         player = null;
     }
 
+    public void updatePlayerTime(float time) {
+        if (game == null || player == null) {
+            return;
+        }
+
+        game.setPlayerTime(player, time);
+        sendTCP(protocol.writeSuccess("timeset"));
+    }
+
     public void sendTCP(String msg) {
         if (writer == null) return;
         writer.println(msg);
@@ -120,6 +129,10 @@ public class ClientController implements Runnable, PacketListener {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     public Address getAddress() {

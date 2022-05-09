@@ -54,7 +54,7 @@ public class PosCommand extends AbstractCommandHandler {
             p.setPosition(new Vector3<>(posX,posY,posZ));
             p.setQuaternion(new Vector4<>(quX, quY, quZ, quW));
 
-            if (soundString.length() == 3) {
+            if (soundString.length() == 5) {
                 client.getPlayer().setSoundString(soundString);
             }
 

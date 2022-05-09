@@ -1,14 +1,14 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Game implements Runnable {
 
     private static final int TICK_RATE = 20;
 
     private final List<Player> players = Collections.synchronizedList(new ArrayList<>());
+
+    private final List<PlayerTime> times = Collections.synchronizedList(new ArrayList<>());
 
     private boolean isRunning = false;
 
@@ -24,12 +24,27 @@ public class Game implements Runnable {
         }
     }
 
+    public synchronized void setPlayerTime(Player player, float time) {
+        synchronized (times) {
+            boolean found = false;
+            for (PlayerTime pt : times) {
+                if (pt.getPlayer().getId() == player.getId()) {
+                    pt.setTime(time);
+                    found = true;
+                }
+            }
+            if (!found) {
+                times.add(new PlayerTime(player, time));
+            }
+        }
+    }
+
     @Override
     public void run() {
         isRunning = true;
 
         long sleepTime = 1000 / TICK_RATE;
-        long taskTime = 0;
+        long taskTime;
 
         while(isRunning) {
             taskTime = System.currentTimeMillis();
@@ -59,6 +74,12 @@ public class Game implements Runnable {
     public List<Player> getPlayers() {
         synchronized (players) {
             return new ArrayList<>(players);
+        }
+    }
+
+    public List<PlayerTime> getTimes() {
+        synchronized (times) {
+         return new ArrayList<>(times);
         }
     }
 }

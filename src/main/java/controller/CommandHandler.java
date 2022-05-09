@@ -1,9 +1,6 @@
 package controller;
 
-import controller.commandhandlers.ICommandHandler;
-import controller.commandhandlers.JoinCommand;
-import controller.commandhandlers.PosCommand;
-import controller.commandhandlers.TestCommand;
+import controller.commandhandlers.*;
 import services.protocol.Command;
 import services.protocol.ServerProtocol;
 
@@ -24,7 +21,7 @@ public class CommandHandler {
     private void setupHandlers() {
 
         firstHandler = new TestCommand();
-        firstHandler.setNext(new JoinCommand()).setNext(new PosCommand());
+        firstHandler.setNext(new JoinCommand()).setNext(new PosCommand()).setNext(new GetCommand()).setNext(new SetTimeCommand());
     }
 
     public synchronized void handleCommand(Command cmd) {

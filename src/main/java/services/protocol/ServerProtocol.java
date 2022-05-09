@@ -5,6 +5,11 @@ import data.Vector3;
 import data.Vector4;
 import model.Game;
 import model.Player;
+import model.PlayerTime;
+
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 public class ServerProtocol {
 
@@ -63,6 +68,20 @@ public class ServerProtocol {
 
             }
 
+        }
+        sb.setLength(sb.length()-1);
+
+        return sb.toString();
+    }
+
+    public String parseTimes(Game game) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("times:");
+
+        List<PlayerTime> times = game.getTimes();
+        times.sort((o1, o2) -> Float.compare(o1.getTime(), o2.getTime()));
+        for (PlayerTime pt : times) {
+            sb.append(pt.getPlayer().getName()).append(",").append(pt.getTime()).append(",");
         }
         sb.setLength(sb.length()-1);
 
