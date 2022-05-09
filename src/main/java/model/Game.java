@@ -28,7 +28,7 @@ public class Game implements Runnable {
         synchronized (times) {
             boolean found = false;
             for (PlayerTime pt : times) {
-                if (pt.getPlayer().getId() == player.getId()) {
+                if (pt.getPlayer().getId() == player.getId() && time < pt.getTime()) {
                     pt.setTime(time);
                     found = true;
                 }
