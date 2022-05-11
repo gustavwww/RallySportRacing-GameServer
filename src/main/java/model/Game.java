@@ -1,5 +1,7 @@
 package model;
 
+import services.protocol.ServerProtocol;
+
 import java.util.*;
 
 public class Game implements Runnable {
@@ -31,10 +33,20 @@ public class Game implements Runnable {
                 if (pt.getPlayer().getId() == player.getId() && time < pt.getTime()) {
                     pt.setTime(time);
                     found = true;
+                    sendTimes();
                 }
             }
             if (!found) {
                 times.add(new PlayerTime(player, time));
+                sendTimes();
+            }
+        }
+    }
+
+    private synchronized void sendTimes() {
+        synchronized (players) {
+            for (Player p : players) {
+                p.getClient().sendTCP(ServerProtocol.getInstance().parseTimes(this));
             }
         }
     }
