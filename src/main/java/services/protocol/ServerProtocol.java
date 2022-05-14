@@ -43,6 +43,7 @@ public class ServerProtocol {
         for (Player p : game.getPlayers()) {
             sb.append("player,").append(p.getId()).append(",")
                     .append(p.getName()).append(",")
+                    .append(p.getColor()).append(",")
                     .append(p.getPosition().x).append(",")
                     .append(p.getPosition().y).append(",")
                     .append(p.getPosition().z).append(",")

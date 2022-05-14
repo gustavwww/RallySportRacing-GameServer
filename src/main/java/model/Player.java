@@ -14,6 +14,7 @@ public class Player {
 
     private final int id;
     private final String name;
+    private int color;
 
     private Vector3<Float> position;
     private Vector4<Float> quaternion;
@@ -30,6 +31,8 @@ public class Player {
         this.name = name;
         this.client = client;
 
+        color = 0;
+
         position = new Vector3<>(0.0f, 0.0f, 0.0f);
         quaternion = new Vector4<>(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -44,6 +47,10 @@ public class Player {
             objects.add(new Tuple<>(new Vector3<>(0f,0f,0f), new Vector4<>(0f,0f,0f,0f)));
         }
 
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public void setPosition(Vector3<Float> position) {
@@ -76,6 +83,10 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Vector3<Float> getPosition() {
