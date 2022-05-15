@@ -7,8 +7,6 @@ import model.Game;
 import model.Player;
 import model.PlayerTime;
 
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 public class ServerProtocol {
@@ -36,14 +34,30 @@ public class ServerProtocol {
         return parser.parseCommand(cmd);
     }
 
+    public String parsePlayerState(Player p) {
+        return p.getId() + "," + p.getName() + "," + p.getColor();
+    }
+
+    public String parsePlayersState(Game game) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("players:");
+
+        List<Player> players = game.getPlayers();
+
+        for (Player p : players) {
+            sb.append(parsePlayerState(p)).append(",");
+        }
+        sb.setLength(sb.length()-1);
+
+        return sb.toString();
+    }
+
     public String parseGame(Game game) {
         // game:player,name,x,y,z,...player,name,x,y,z....
         StringBuilder sb = new StringBuilder();
         sb.append("game:");
         for (Player p : game.getPlayers()) {
             sb.append("player,").append(p.getId()).append(",")
-                    .append(p.getName()).append(",")
-                    .append(p.getColor()).append(",")
                     .append(p.getPosition().x).append(",")
                     .append(p.getPosition().y).append(",")
                     .append(p.getPosition().z).append(",")

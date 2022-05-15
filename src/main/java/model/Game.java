@@ -9,20 +9,36 @@ public class Game implements Runnable {
     private static final int TICK_RATE = 20;
 
     private final List<Player> players = Collections.synchronizedList(new ArrayList<>());
-
     private final List<PlayerTime> times = Collections.synchronizedList(new ArrayList<>());
 
     private boolean isRunning = false;
 
+    private final ServerProtocol protocol;
+
+    public Game() {
+        protocol = ServerProtocol.getInstance();
+    }
+
     public synchronized void addPlayer(Player player) {
         synchronized (players) {
+            player.getClient().sendTCP(protocol.parsePlayersState(this));
             players.add(player);
+            sendToAllPlayersExcept("joined:" + protocol.parsePlayerState(player), player);
         }
     }
 
     public synchronized void removePlayer(Player player) {
         synchronized (players) {
             players.remove(player);
+            sendToAllPlayersExcept("left:" + protocol.parsePlayerState(player), player);
+        }
+    }
+
+    public synchronized void sendPlayerUpdate(Player player) {
+        synchronized (players) {
+            if (players.contains(player)) {
+                sendToAllPlayersExcept("update:" + protocol.parsePlayerState(player), player);
+            }
         }
     }
 
@@ -33,20 +49,30 @@ public class Game implements Runnable {
                 if (pt.getPlayer().getId() == player.getId() && time < pt.getTime()) {
                     pt.setTime(time);
                     found = true;
-                    sendTimes();
+                    sendToAllPlayers(protocol.parseTimes(this));
                 }
             }
             if (!found) {
                 times.add(new PlayerTime(player, time));
-                sendTimes();
+                sendToAllPlayers(protocol.parseTimes(this));
             }
         }
     }
 
-    private synchronized void sendTimes() {
+    private synchronized void sendToAllPlayersExcept(String msg, Player player) {
         synchronized (players) {
             for (Player p : players) {
-                p.getClient().sendTCP(ServerProtocol.getInstance().parseTimes(this));
+                if (p.getId() != player.getId()) {
+                    p.getClient().sendTCP(msg);
+                }
+            }
+        }
+    }
+
+    private synchronized void sendToAllPlayers(String msg) {
+        synchronized (players) {
+            for (Player p : players) {
+                p.getClient().sendTCP(msg);
             }
         }
     }

@@ -21,7 +21,7 @@ public class CommandHandler {
     private void setupHandlers() {
 
         firstHandler = new TestCommand();
-        firstHandler.setNext(new JoinCommand()).setNext(new PosCommand()).setNext(new GetCommand()).setNext(new SetTimeCommand());
+        firstHandler.setNext(new JoinCommand()).setNext(new PosCommand()).setNext(new GetCommand()).setNext(new SetTimeCommand()).setNext(new SetColorCommand());
     }
 
     public synchronized void handleCommand(Command cmd) {
